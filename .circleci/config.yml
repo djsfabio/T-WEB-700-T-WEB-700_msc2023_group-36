@@ -13,7 +13,8 @@ jobs:
             curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
             chmod +x ~/docker-compose
             mv ~/docker-compose /usr/local/bin/docker-compose
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Connection
           command: echo Epitech2021+ | docker login -u fabiodjs --password-stdin
