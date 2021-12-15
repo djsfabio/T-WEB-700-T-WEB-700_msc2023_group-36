@@ -1,4 +1,4 @@
-version: 2.1
+Clientversion: 2.1
 jobs:
   build:
     docker:
@@ -16,7 +16,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Connection
-          command: echo Dejesus92+ | docker login -u fabiodjs --password-stdin
+          command: echo Epitech2021+ | docker login -u fabiodjs --password-stdin
       - run:
           name: Build
           command: bash build-image.sh
@@ -24,16 +24,16 @@ jobs:
           name: Image ls
           command: docker image ls
       - run:
-          name: Docker taguer Elixir
-          command: docker tag project_elixircontainer:latest fabiodjs/elixircontainer:latest
+          name: Docker taguer Client
+          command: docker tag project_client:latest fabiodjs/client:latest
       - run:
           name: Docker Push Elixir
-          command: docker push fabiodjs/elixircontainer:latest
+          command: docker push fabiodjs/client:latest
       - run:
-          name: Docker tag Node
-          command: docker tag project_frontnode:latest fabiodjs/frontnode:latest
+          name: Docker tag Server
+          command: docker tag project_server:latest fabiodjs/server:latest
       - run:
-          name: Docker push node
-          command: docker push fabiodjs/frontnode:latest
+          name: Docker push Server
+          command: docker push fabiodjs/server:latest
       
       
