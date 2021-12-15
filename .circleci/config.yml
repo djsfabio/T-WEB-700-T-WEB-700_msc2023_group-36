@@ -28,7 +28,7 @@ jobs:
           name: Docker taguer Client
           command: docker tag project_client:latest fabiodjs/client:latest
       - run:
-          name: Docker Push Elixir
+          name: Docker Push Client
           command: docker push fabiodjs/client:latest
       - run:
           name: Docker tag Server
