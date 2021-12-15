@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    depends_on:
+      - server
+    restart: always
+
+  server:
+    build: ./server
+    ports:
+      - "9000:9000"
+    environment:
+      - BD_HOST=
+      - PORT=9000
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=api_db
+      - MONGO_INITDB_ROOT_PASSWORD=api_db
+      - MONGO_INITDB_DATABASE=api_db
+      - MONGO_INITDB_ROOT_HOSTNAME=mongo
+      - MONGO_INITDB_ROOT_PORT=27017
+    volumes:
+      - mongo-db:/data/db
+
+  redis:
+    image: redis
+
+volumes:
+  mongo-db: null

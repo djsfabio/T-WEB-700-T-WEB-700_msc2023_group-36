@@ -1,0 +1,39 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          environment:
+            COMPOSE_VERSION: '1.29.2'
+          command: |
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker
+      - run:
+          name: Connection
+          command: echo Dejesus92+ | docker login -u fabiodjs --password-stdin
+      - run:
+          name: Build
+          command: bash build-image.sh
+      - run:
+          name: Image ls
+          command: docker image ls
+      - run:
+          name: Docker taguer Elixir
+          command: docker tag project_elixircontainer:latest fabiodjs/elixircontainer:latest
+      - run:
+          name: Docker Push Elixir
+          command: docker push fabiodjs/elixircontainer:latest
+      - run:
+          name: Docker tag Node
+          command: docker tag project_frontnode:latest fabiodjs/frontnode:latest
+      - run:
+          name: Docker push node
+          command: docker push fabiodjs/frontnode:latest
+      
+      

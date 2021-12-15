@@ -1,0 +1,17 @@
+server/node_modules
+server/Dockerfile
+server/.dockerignore
+server/.gitignore
+server/.env.example
+server/.idea
+
+client/node_modules
+client/Dockerfile
+client/.dockerignore
+client/.gitignore
+client/.idea
+
+Dockerfile
+.gitignore
+.idea
+.dockerignore
