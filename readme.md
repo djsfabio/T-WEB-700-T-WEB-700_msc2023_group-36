@@ -49,6 +49,9 @@ The project is divided in two parts :
 
 Client is used to provide the web platform while server provide the api.
 
+The project is visible here in a remote server : 
+* [Count of Money](http://51.91.56.95:3000/)
+
 ### Built With
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
