@@ -1,59 +1,78 @@
-const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
+const app = express();
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 const session = require('express-session');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // ENVIRONMENT VARIABLES
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const providerRouter = require('./routes/provider');
-const articleRouter = require('./routes/articles');
-
-const app = express();
-
-//TODO - don't need this anymore
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//TODO - don't need this anymore for a moment
-app.use(express.static(path.join(__dirname, 'public')));
+//Import routes
+const userRouter = require('./routes/userRoutes');
+const articleRouter = require('./routes/articleRoutes');
+const providerRouter = require('./routes/providerRoutes');
+const crypto_currencyRouter = require('./routes/crypto_currencyRoutes');
+const {CLIENT_URL} = require("./config/config");
+
+// Allow request only from client
+app.use(cors({
+    origin: CLIENT_URL,
+    credentials: true
+}));
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: "secret", // TODO: Change this
   resave: false,
   saveUninitialized: true,
   cookie: { secure: true }
 }))
 
 // Middlewares
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/users/auth', providerRouter);
+// Default routes
+//TODO - to check it soon
+app.get('/', async (req, res) => {
+    res.status(200).json({
+        users: {
+            get: '/users',
+            get_: '/users/:id',
+            post: '/users/login',
+            put: '/users/:id',
+            delete: '/users/:id',
+            auth: {
+                get: '/users/auth/google',
+                get_: '/users/auth/google/callback',
+            },
+            users: {
+                get: '/users/profile',
+                post: '/users/register',
+                post_: '/users/logout',
+                delete: '/users/unsubscribe',
+            }
+        },
+        articles: {
+            get: '/articles',
+            get_: '/articles/:id',
+        },
+        cryptos: {
+            get_all: '/cryptos/all',
+            get: '/cryptos/[cmids=cmid1,cmid2,...]',
+            get_id: '/cryptos/:id',
+            post: '/cryptos',
+            put: '/cryptos/:id',
+            delete: '/cryptos/:id',
+        },
+    })
+});
+
+app.use('/users', userRouter);
+// app.use('/users/auth', providerRouter);
 app.use('/articles', articleRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use('/cryptos', crypto_currencyRouter);
 
 module.exports = app;

@@ -1,17 +1,38 @@
 import React from 'react';
-import { Typography, Row, Col, Statistic } from 'antd';
+import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
+import { useAppDispatch } from '../../app/useAppDispatch';
+import { useEffect } from 'react';
 import { useGetCryptosQuery } from '../../services/cryptoApi';
 import Cryptocurrencies from './Cryptocurrencies';
 import News from './News';
 import Loader from '../utils/Loader';
 
+import { getUser } from '../../services/user/selector';
+import { useSelector } from 'react-redux';
+import { addUser } from '../../services/user/slice';
+
 const { Title } = Typography;
 
 const Homepage = () => {
-  const { data, isFetching } = useGetCryptosQuery(10);
-  const globalStats = data?.data?.stats;
+  const { isFetching } = useGetCryptosQuery(10);
+
+  const userInfo = useSelector(getUser);
+  const dispatch = useAppDispatch();
+
+  /*useEffect(() => {
+    dispatch(
+      addUser({
+        id: '1',
+        email: 'test',
+        name: 'test',
+        password: 'test',
+        token: 'test',
+        role: 'user',
+      })
+    );
+  }, [dispatch]);*/
 
   if (isFetching) return <Loader />;
 

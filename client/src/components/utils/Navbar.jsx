@@ -7,13 +7,19 @@ import {
   FundOutlined,
   MenuOutlined,
   UserOutlined,
+  LockOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
 
-import icon from '../../images/logo2.png';
+import logo from '../../images/logo.png';
+// import icon from '../../images/logo2.png';
+import { getUser } from '../../services/user/selector';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [screenSize, setScreenSize] = useState(undefined);
+  const userInfo = useSelector(getUser);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -33,14 +39,9 @@ const Navbar = () => {
   return (
     <div className="nav-container">
       <div className="logo-container">
-        <Avatar src={icon} size="large" />
-        <Typography.Title level={2} className="logo">
-          <Link to="/">
-            The Count of
-            <br />
-            Money
-          </Link>
-        </Typography.Title>
+        <Link to="/">
+          <img src={logo} alt="logo" height="40"/>
+        </Link>
         <Button
           className="menu-control-container"
           onClick={() => setActiveMenu(!activeMenu)}>
@@ -49,18 +50,35 @@ const Navbar = () => {
       </div>
       {activeMenu && (
         <Menu theme="dark">
+          {userInfo.name === 'admin' && (
+            <Menu.Item icon={<LockOutlined />}>
+              <Link to="/admin">Admin</Link>
+            </Menu.Item>
+          )}
+          {userInfo.id && (
+            <Menu.Item icon={<UserOutlined />}>
+              <Link to="/profile">Profile</Link>
+            </Menu.Item>
+          )}
           <Menu.Item icon={<HomeOutlined />}>
             <Link to="/">Home</Link>
           </Menu.Item>
           <Menu.Item icon={<FundOutlined />}>
             <Link to="/cryptocurrencies">Cryptocurrencies</Link>
           </Menu.Item>
-          <Menu.Item icon={<UserOutlined />}>
-            <Link to="/profile">Profile</Link>
-          </Menu.Item>
           <Menu.Item icon={<BulbOutlined />}>
             <Link to="/news">News</Link>
           </Menu.Item>
+          {!userInfo.id && (
+            <Menu.Item icon={<UserOutlined />}>
+              <Link to="/login">Log in / Sign Up</Link>
+            </Menu.Item>
+          )}
+          {userInfo.id && (
+            <Menu.Item icon={<LogoutOutlined />}>
+              <Link to="/logout">Log out</Link>
+            </Menu.Item>
+          )}
         </Menu>
       )}
     </div>

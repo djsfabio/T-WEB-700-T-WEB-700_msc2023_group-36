@@ -1,27 +1,18 @@
-const mongoClient = require('mongodb').MongoClient
-const env = require('dotenv').config()
-
-class Database {
-    constructor() {
-        this.pool = mysql.createPool(
-            {
-                connectionLimit: 10,
-                host: env.parsed.BD_HOST,
-                user: env.parsed.BD_USER,
-                password: env.parsed.BD_PASS,
-                database: env.parsed.BD_NAME
-            }
-        );
-        this.getPool = this.getPool.bind(this);
-    }
-
-    getPool() {
-        return this.pool;
-    }
-
-    // TODO - to create methods query, etc
-}
+const mongoose = require('mongoose');
+const {MONGO_USER, MONGO_PASS, MONGO_IP, MONGO_PORT, MONGO_DB, SESSION_SECRET, CLIENT_URL} = require("../config");
+const DATABASE_URL = `mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_IP}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
+mongoose.connect(
+    DATABASE_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Connected to MongoDB');
+        }
+    });
 
 module.exports = {
-    database : new Database()
-}
+    mongoose
+};

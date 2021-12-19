@@ -1,1 +1,0 @@
-FROM mongodb:lastest as base

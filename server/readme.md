@@ -50,3 +50,12 @@ It's where you have to write the name of your database, username and password.
 
 This file is not necessary to commit it. It's just a way to store your local environment variables.
 
+
+## Swagger UI
+
+We made a swagger in order to help you to use our api
+
+<img src="../docs/swagger_preview.png">
+
+You'll find the `.json` file in the `docs` folder at the root of the repository.
+[Show](../docs/)

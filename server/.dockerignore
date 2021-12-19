@@ -1,6 +1,0 @@
-node_modules
-Dockerfile
-.gitignore
-.env.example
-.idea
-.dockerignore

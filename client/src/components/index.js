@@ -1,6 +1,10 @@
 export { default as Homepage } from './pages/Homepage';
 export { default as Navbar } from './utils/Navbar';
 export { default as News } from './pages/News';
+export { default as Login } from './pages/Login';
+export { default as Register } from './pages/Register';
+export { default as Logout } from './pages/Logout';
 export { default as Cryptocurrencies } from './pages/Cryptocurrencies';
 export { default as Profile } from './pages/Profile';
+export { default as Admin } from './pages/Admin';
 export { default as CryptoDetails } from './pages/CryptoDetails';

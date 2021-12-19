@@ -3,17 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon -L ./bin/www",
-    "fixtures": "node ./config/fixtures/users.js",
-    "test": "mocha --exit"
+    "start": "node src/www",
+    "dev": "nodemon -L src/www",
+    "fixtures": "node config/fixtures/seeds/fixtures.js",
+    "test": "mocha --recursive --exit"
   },
   "dependencies": {
     "@types/gapi": "^0.0.41",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
+    "coingecko-api": "^1.0.10",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-session": "^1.17.2",
@@ -32,6 +36,7 @@
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "pow-mongoose-fixtures": "^0.3.0"
   }
 }
