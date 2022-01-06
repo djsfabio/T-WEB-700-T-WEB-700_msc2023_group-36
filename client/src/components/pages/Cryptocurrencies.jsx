@@ -13,26 +13,26 @@ const Cryptocurrencies = ({ simplified }) => {
   const [cryptos, setCryptos] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // useEffect(() => {
-  //   setCryptos(cryptosList?.data?.coins);
-  //
-  //   const filteredData = cryptosList?.data?.coins.filter(item =>
-  //     item.name.toLowerCase().includes(searchTerm)
-  //   );
-  //
-  //   setCryptos(filteredData);
-  // }, [cryptosList, searchTerm]);
+  useEffect(() => {
+    setCryptos(cryptosList?.data?.coins);
+  
+    const filteredData = cryptosList?.data?.coins.filter(item =>
+      item.name.toLowerCase().includes(searchTerm)
+    );
+  
+    setCryptos(filteredData);
+  }, [cryptosList, searchTerm]);
 
-  useEffect(async () => {
-    try {
-      const response= await axiosInstance.get('/cryptos');
-      console.log(response);
-      setCryptos(response.data.data);
-    } catch (error) {
-      //DO nothing
-      console.error("CRYPTO ERROR", error);
-    }
-  }, [cryptosList]);
+  // useEffect(async () => {
+  //   try {
+  //     const response= await axiosInstance.get('/cryptos');
+  //     console.log(response);
+  //     setCryptos(response.data.data);
+  //   } catch (error) {
+  //     //DO nothing
+  //     console.error("CRYPTO ERROR", error);
+  //   }
+  // }, [cryptosList]);
 
   if (isFetching) return <Loader />;
 
